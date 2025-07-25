@@ -4,7 +4,7 @@ resource "azurerm_lb_nat_rule" "web_lb_inbound_nat_rule_22" {
   count = var.web_linuxvm_instance_count
   name = "vm-${count.index}-ssh-${var.lb_inbound_nat_ports[count.index]}-vm-22"
   protocol = "Tcp"
-  frontend_port = element(var.lb_inbound_nat_ports, count.index)
+  frontend_port = element(var.lb_inbound_nat_ports, count.index) ## don't need to use splat function because its already list variable, which is already indexable.
   backend_port = 22
   frontend_ip_configuration_name = azurerm_lb.web_lb.frontend_ip_configuration[0].name
   resource_group_name = azurerm_resource_group.rg.name

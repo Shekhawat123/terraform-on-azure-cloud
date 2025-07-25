@@ -19,6 +19,8 @@ output "web_linuxvm_network_interface_private_ip_addresses" {
   value = [azurerm_network_interface.web_linuxvm_nic[*].private_ip_addresses]
 }
 
+## [*] splat function is used to get all the values from a list of resources.
+
 # Linux VM Outputs
 /*
 ## Virtual Machine Public IP

@@ -53,7 +53,7 @@ resource "azurerm_lb_rule" "web_lb_rule_app1" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_backend_address_pool_association
 resource "azurerm_network_interface_backend_address_pool_association" "web_nic_lb_associate" {
   count = var.web_linuxvm_instance_count
-  network_interface_id    = element(azurerm_network_interface.web_linuxvm_nic[*].id, count.index)
-  ip_configuration_name   = azurerm_network_interface.web_linuxvm_nic[count.index].ip_configuration[0].name
+  network_interface_id    = element(azurerm_network_interface.web_linuxvm_nic[*].id, count.index) ## This is a 1-2-N mapping but here again we could use 1-2-1 mapping.
+  ip_configuration_name   = azurerm_network_interface.web_linuxvm_nic[count.index].ip_configuration[0].name ## here we use 1-2-1 mapping.
   backend_address_pool_id = azurerm_lb_backend_address_pool.web_lb_backend_address_pool.id
 }

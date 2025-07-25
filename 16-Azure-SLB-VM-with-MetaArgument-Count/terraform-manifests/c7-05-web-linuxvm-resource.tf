@@ -27,7 +27,7 @@ resource "azurerm_linux_virtual_machine" "web_linuxvm" {
   location = azurerm_resource_group.rg.location
   size = "Standard_DS1_v2"
   admin_username = "azureuser"
-  network_interface_ids = [ element(azurerm_network_interface.web_linuxvm_nic[*].id, count.index ) ] - - This is a 1-2-N mapping, so we can use element function to get the NIC ID for each VM instance. More apt when we have let's say 4 VMs and 2 NICs.
+  network_interface_ids = [ element(azurerm_network_interface.web_linuxvm_nic[*].id, count.index ) ] - - This is a 1-2-N mapping, so we can use element function to get the NIC ID for each VM instance. More apt when we have unequal resources, let's say 4 VMs and 2 NICs.
  # network_interface_id  = azurerm_network_interface.web_linuxvm_nic[count.index].id  ## can use this one as its a 1-2-1 mapping b/w VM and NIC.
 
   admin_ssh_key {

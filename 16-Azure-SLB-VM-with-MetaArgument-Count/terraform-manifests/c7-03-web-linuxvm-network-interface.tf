@@ -6,10 +6,11 @@ resource "azurerm_network_interface" "web_linuxvm_nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "web-linuxvm-ip-1"
+    name                          = "web-linuxvm-ip-1"  ## Can use same ip config name as they are associated with different NICs
+  # name                          = "web-linuxvm-ip-${count.index}"  ## But for better clarity, we can use different names.
     subnet_id                     = azurerm_subnet.websubnet.id
     private_ip_address_allocation = "Dynamic"
-    #public_ip_address_id = azurerm_public_ip.web_linuxvm_publicip.id 
+    #public_ip_address_id = azurerm_public_ip.web_linuxvm_publicip.id
   }
 }
 
