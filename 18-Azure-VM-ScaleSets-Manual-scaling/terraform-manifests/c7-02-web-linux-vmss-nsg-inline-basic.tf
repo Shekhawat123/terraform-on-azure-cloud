@@ -4,12 +4,12 @@ resource "azurerm_network_security_group" "web_vmss_nsg" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
-  dynamic "security_rule" {
+  dynamic "security_rule" {                        ## can dynamically construct repeatable 'nested' blocks. A dynamic block acts much like a for expression.
     for_each = var.web_vmss_nsg_inbound_ports
     content {
-      name                       = "inbound-rule-${security_rule.key}"
-      description                = "Inbound Rule ${security_rule.key}"    
-      priority                   = sum([100, security_rule.key])
+      name                       = "inbound-rule-${security_rule.key}" ## will be 'inbound-rule-0', 'inbound-rule-1', 'inbound-rule-2' for 22, 80, 443 respectively
+      description                = "Inbound Rule ${security_rule.key}"     ## Had we used 'set' type, this would be just the port number - Inbound Rule 22, Inbound Rule 80, Inbound Rule 443
+      priority                   = sum([100, security_rule.key])       ## will be 100, 101, 102 for 22, 80, 443 respectively. Had it been set type, it would have been 122, 180, 543 respectively.
       direction                  = "Inbound"
       access                     = "Allow"
       protocol                   = "Tcp"
